@@ -9,14 +9,12 @@ using System.Collections.Generic;
 
 namespace Full_GRASP_And_SOLID
 {
-    public class Recipe
+    public class Recipe : ITextToPrint
     {
         // Cambiado por OCP
         private IList<BaseStep> steps = new List<BaseStep>();
+        public Product FinalProduct { get; set; }      
 
-        public Product FinalProduct { get; set; }
-
-        // Agregado por Creator
         public void AddStep(Product input, double quantity, Equipment equipment, int time)
         {
             Step step = new Step(input, quantity, equipment, time);
@@ -29,13 +27,6 @@ namespace Full_GRASP_And_SOLID
             WaitStep step = new WaitStep(description, time);
             this.steps.Add(step);
         }
-
-        public void RemoveStep(BaseStep step)
-        {
-            this.steps.Remove(step);
-        }
-
-        // Agregado por SRP
         public string GetTextToPrint()
         {
             string result = $"Receta de {this.FinalProduct.Description}:\n";
@@ -50,7 +41,8 @@ namespace Full_GRASP_And_SOLID
             return result;
         }
 
-        // Agregado por Expert
+        
+         // Agregado por Expert
         public double GetProductionCost()
         {
             double result = 0;
